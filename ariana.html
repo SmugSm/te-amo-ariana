@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Te amo Ariana</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom, #000010, #1a001a);
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      position: relative;
+    }
+
+    .heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 180px;
+      background: red;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      animation: pulse 1s infinite;
+      box-shadow: 0 0 30px red;
+      z-index: 2;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 180px;
+      background: red;
+      border-radius: 50%;
+      box-shadow: 0 0 30px red;
+    }
+
+    .heart::before {
+      top: -100px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 100px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.1); }
+      100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+    }
+
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: rotate(45deg) translate(-50%, -50%);
+      color: white;
+      font-size: 22px;
+      text-align: center;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: crimson;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 4;
+    }
+
+    audio {
+      display: none;
+    }
+
+    /* Estrellas de fondo animadas */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://cdn.pixabay.com/photo/2016/11/21/17/41/starry-sky-1840409_960_720.jpg') repeat;
+      animation: moveStars 50s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes moveStars {
+      0% { background-position: 0 0; }
+      100% { background-position: -1000px 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Estrellas de fondo -->
+  <div class="stars"></div>
+
+  <!-- Corazón central -->
+  <div class="heart">
+    <div class="message">Te amo<br>Ariana</div>
+  </div>
+
+  <!-- Reproductor de música (invisible, controlado por el evento de carga de la página) -->
+  <audio id="musica" autoplay loop>
+    <source src="sabes-unacosa.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+  </audio>
+
+  <script>
+    // Reproducir música automáticamente al cargar la página
+    window.onload = function() {
+      var audio = document.getElementById('musica');
+      audio.play().then(function() {
+        console.log("La música está sonando automáticamente.");
+      }).catch(function(error) {
+        console.log("Hubo un error al intentar reproducir la música:", error);
+      });
+    }
+  </script>
+
+</body>
+</html>

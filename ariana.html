@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Te amo Ariana</title>
   <style>
     body {
@@ -11,7 +10,6 @@
       background: linear-gradient(to bottom, #000010, #1a001a);
       overflow: hidden;
       font-family: 'Arial', sans-serif;
-      position: relative;
     }
 
     .heart {
@@ -66,70 +64,106 @@
       z-index: 3;
     }
 
-    button {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: crimson;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      z-index: 4;
+    .star, .floating-heart {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .star {
+      width: 2px;
+      height: 2px;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    .floating-heart {
+      width: 15px;
+      height: 15px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: floatUp 8s linear infinite;
+    }
+
+    .floating-heart::before,
+    .floating-heart::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .floating-heart::before {
+      top: -7.5px;
+      left: 0;
+    }
+
+    .floating-heart::after {
+      left: 7.5px;
+      top: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.5); }
+    }
+
+    @keyframes floatUp {
+      0% {
+        bottom: -20px;
+        opacity: 0;
+        transform: translateX(0) rotate(45deg) scale(0.5);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        bottom: 100vh;
+        opacity: 0;
+        transform: translateX(30px) rotate(45deg) scale(1.2);
+      }
     }
 
     audio {
       display: none;
     }
-
-    /* Estrellas de fondo animadas */
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://cdn.pixabay.com/photo/2016/11/21/17/41/starry-sky-1840409_960_720.jpg') repeat;
-      animation: moveStars 50s linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes moveStars {
-      0% { background-position: 0 0; }
-      100% { background-position: -1000px 0; }
-    }
-
   </style>
 </head>
 <body>
 
-  <!-- Estrellas de fondo -->
-  <div class="stars"></div>
+  <!-- Estrellitas -->
+  <script>
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(star);
+    }
+
+    for (let i = 0; i < 30; i++) {
+      const h = document.createElement('div');
+      h.classList.add('floating-heart');
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.animationDelay = Math.random() * 10 + 's';
+      h.style.animationDuration = (6 + Math.random() * 4) + 's';
+      document.body.appendChild(h);
+    }
+  </script>
 
   <!-- Corazón central -->
   <div class="heart">
     <div class="message">Te amo<br>Ariana</div>
   </div>
 
-  <!-- Reproductor de música (invisible, controlado por el evento de carga de la página) -->
-  <audio id="musica" autoplay loop>
-    <source src="sabes-unacosa.mp3" type="audio/mpeg">
-    Tu navegador no soporta el audio.
+  <!-- Música romántica (puedes cambiar el link) -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio :(
   </audio>
-
-  <script>
-    // Reproducir música automáticamente al cargar la página
-    window.onload = function() {
-      var audio = document.getElementById('musica');
-      audio.play().then(function() {
-        console.log("La música está sonando automáticamente.");
-      }).catch(function(error) {
-        console.log("Hubo un error al intentar reproducir la música:", error);
-      });
-    }
-  </script>
 
 </body>
 </html>
